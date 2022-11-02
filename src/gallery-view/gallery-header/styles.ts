@@ -1,7 +1,5 @@
-import { StyleSheet, Dimensions } from 'react-native';
-const { width } = Dimensions.get('window');
-const guidelineBaseWidth = 360;
-const scale = (size: number) => (width / guidelineBaseWidth) * size;
+import { StyleSheet } from 'react-native';
+import { scale } from '../../utils/common';
 
 export const styles = StyleSheet.create({
   title: {

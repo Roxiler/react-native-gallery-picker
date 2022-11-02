@@ -3,6 +3,7 @@ import {
   FlatList,
   Image,
   Modal,
+  Platform,
   SafeAreaView,
   TouchableOpacity,
   View,
@@ -20,35 +21,37 @@ interface CustomGallaryProps {
   type: string;
   selectionLimit: number;
   onClose?: () => void;
-  onCameraPress?: () => void;
-  onSelectImages?: (media: any[]) => void;
+  onSelectImages: (media: any[]) => void;
   children?: any;
 }
 
 const CustomGallary = (props: CustomGallaryProps) => {
   const {
-    // visible,
     onClose,
     images,
     numOfColums,
     isRefresh,
     window,
     albums,
-    // onCameraPress,
     isAlbumListVisible,
     selectedAlbum,
     isDisabled,
     openGalleryModal,
     showDoneButton,
-    // onSelectImages,
+    isNextPage,
+    imageError,
+    onImageError,
     handleOpenGallery,
     onDonePress,
     onSelectImage,
-    launchAppCamera,
     onAlbumPress,
     selectAlbum,
     handleClosePress,
+    getGallaryImages,
   } = useGalleryView(props);
+  if (Platform.OS === 'ios') {
+    return null;
+  }
   return (
     <TouchableOpacity onPress={handleOpenGallery} disabled={isDisabled}>
       {props.children}
@@ -56,9 +59,8 @@ const CustomGallary = (props: CustomGallaryProps) => {
         animationType="fade"
         transparent
         visible={openGalleryModal}
-        // enableDismisOnTouchOutside
         onRequestClose={onClose}
-        style={{ justifyContent: 'flex-end' }}
+        style={styles.modalStyle}
       >
         <SafeAreaView style={styles.root}>
           <GalleryHeader
@@ -68,7 +70,6 @@ const CustomGallary = (props: CustomGallaryProps) => {
             onClosePress={handleClosePress}
             onDonePress={onDonePress}
             showDoneButton={showDoneButton}
-            launchAppCamera={launchAppCamera}
           />
           {isAlbumListVisible ? (
             <AlbumList data={albums} onAlbumNamePress={selectAlbum} />
@@ -82,7 +83,9 @@ const CustomGallary = (props: CustomGallaryProps) => {
                 const { node: { image = {} } = {}, selected = false }: any =
                   item;
                 const { uri = '', playableDuration = 0 }: any = image || {};
-
+                if (imageError || typeof uri !== 'string') {
+                  return null;
+                }
                 return (
                   <TouchableOpacity
                     activeOpacity={0.8}
@@ -111,14 +114,17 @@ const CustomGallary = (props: CustomGallaryProps) => {
                       <></>
                     )}
                     <Image
-                      style={{
-                        width: '100%',
-                        height: `100%`,
-                      }}
+                      style={styles.imageContainer}
                       source={{ uri: uri }}
+                      onError={onImageError}
                     />
                   </TouchableOpacity>
                 );
+              }}
+              onEndReached={() => {
+                if (isNextPage) {
+                  getGallaryImages();
+                }
               }}
             />
           )}

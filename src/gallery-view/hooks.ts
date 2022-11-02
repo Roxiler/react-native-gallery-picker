@@ -23,6 +23,8 @@ export const useGalleryView = (props: any) => {
   const [isRefresh, setRefresh] = useState(false);
   const [lastCursor, setLastCursor] = useState('');
   const [selectedImages, setSelectedImages]: any = useState([]);
+  const [imageError, setImageError] = useState(false);
+  const [isNextPage, setIsNextPage] = useState(false);
   const [albums, setAlbums]: any = useState([]);
   const [selectedAlbum, setSelectedAlbum] = useState('');
   const [isAlbumListVisible, setIsAlbumListVisible] = useState(false);
@@ -31,7 +33,6 @@ export const useGalleryView = (props: any) => {
   const [showDoneButton, setShowDoneButton] = useState(false);
   const isMounted = useRef(false);
   const window = Dimensions.get('window');
-  console.log(lastCursor);
 
   const filterSelected =
     images.length > 0 ? images.filter((item: any) => item.selected) : [];
@@ -72,12 +73,15 @@ export const useGalleryView = (props: any) => {
     CameraRoll.getPhotos({
       first: 50,
       assetType: assetType,
+      after: lastCursor ? lastCursor : undefined,
       groupName: selectedAlbum === 'Gallery' ? '' : selectedAlbum,
       include: ['fileSize', 'filename', 'playableDuration'],
     })
       .then((r) => {
         setLastCursor(r.page_info.end_cursor || '');
-        setImages(r.edges);
+        setIsNextPage(r.page_info.has_next_page);
+        const newImageArray = [...images];
+        setImages([...newImageArray, ...r.edges]);
         refreshList();
       })
       .catch((error) => {
@@ -87,8 +91,6 @@ export const useGalleryView = (props: any) => {
   };
 
   const getAllAlbums = () => {
-    console.log(assetType);
-
     CameraRoll.getAlbums({
       assetType: 'All',
     })
@@ -199,14 +201,23 @@ export const useGalleryView = (props: any) => {
   };
 
   const selectAlbum = (title: string) => {
+    if (title !== selectedAlbum) {
+      setImages([]);
+    }
     setSelectedAlbum(title);
     setIsAlbumListVisible(false);
     setSelectedImages([]);
   };
 
-  const handleOpenGallery = () => {
-    setOpenGalleryModal(true);
-    setIsDisabled(true);
+  const handleOpenGallery = async () => {
+    const isGranted = await checkAppPermission(
+      'Needs access to storage',
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
+    );
+    if (isGranted) {
+      setOpenGalleryModal(true);
+      setIsDisabled(true);
+    }
   };
 
   const handleClosePress = () => {
@@ -216,9 +227,12 @@ export const useGalleryView = (props: any) => {
     setSelectedImages([]);
     setOpenGalleryModal(false);
     setIsDisabled(false);
+    setImages([]);
     // }
   };
-
+  const onImageError = () => {
+    setImageError(true);
+  };
   return {
     visible,
     onClose,
@@ -235,6 +249,9 @@ export const useGalleryView = (props: any) => {
     isDisabled,
     showDoneButton,
     onSelectImages,
+    isNextPage,
+    imageError,
+    onImageError,
     handleClosePress,
     onDonePress,
     onSelectImage,
@@ -242,5 +259,6 @@ export const useGalleryView = (props: any) => {
     selectAlbum,
     launchAppCamera,
     handleOpenGallery,
+    getGallaryImages,
   };
 };

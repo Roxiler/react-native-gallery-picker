@@ -34,9 +34,7 @@ const GalleryHeader = (props: any) => {
             <Text style={styles.title}> Done</Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity onPress={props.launchAppCamera}>
-            <Icon color="black" name="camera-alt" size={30} />
-          </TouchableOpacity>
+          <></>
         )}
       </View>
     </View>

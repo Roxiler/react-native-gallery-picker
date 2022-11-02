@@ -1,5 +1,8 @@
-import { PermissionsAndroid, Platform } from 'react-native';
+import { Dimensions, PermissionsAndroid, Platform } from 'react-native';
 
+const { width } = Dimensions.get('window');
+const guidelineBaseWidth = 360;
+export const scale = (size: number) => (width / guidelineBaseWidth) * size;
 export const checkAppPermission = (message: string, permission: any) => {
   const isAndroid = Platform.OS === 'android';
   return new Promise((resolve) => {

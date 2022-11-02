@@ -1,7 +1,5 @@
-import { StyleSheet, Dimensions } from 'react-native';
-const { width } = Dimensions.get('window');
-const guidelineBaseWidth = 360;
-const scale = (size: number) => (width / guidelineBaseWidth) * size;
+import { StyleSheet } from 'react-native';
+import { scale } from '../utils/common';
 
 export const styles = StyleSheet.create({
   root: {
@@ -10,7 +8,6 @@ export const styles = StyleSheet.create({
   },
   checkedIcon: {
     position: 'absolute',
-    // top: scale(9),
     right: scale(7),
     bottom: 9,
     zIndex: 9999,
@@ -47,5 +44,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: scale(15),
     paddingVertical: scale(10),
+  },
+  modalStyle: { justifyContent: 'flex-end' },
+  imageContainer: {
+    width: '100%',
+    height: `100%`,
   },
 });
