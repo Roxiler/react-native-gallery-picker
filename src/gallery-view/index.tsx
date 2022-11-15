@@ -16,7 +16,7 @@ import { useGalleryView } from './hooks';
 // import { CheckIcon, CloseIcon } from './images'
 import { styles } from './styles';
 
-interface CustomGallaryProps {
+interface CustomGalleryProps {
   visible: boolean;
   type: string;
   selectionLimit: number;
@@ -25,7 +25,7 @@ interface CustomGallaryProps {
   children?: any;
 }
 
-const CustomGallary = (props: CustomGallaryProps) => {
+const CustomGallery = (props: CustomGalleryProps) => {
   const {
     onClose,
     images,
@@ -134,4 +134,4 @@ const CustomGallary = (props: CustomGallaryProps) => {
   );
 };
 
-export default CustomGallary;
+export default CustomGallery;

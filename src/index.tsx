@@ -1,3 +1,3 @@
-import CustomGallary from '../src/gallery-view/index';
+import CustomGallery from '../src/gallery-view/index';
 
-export default CustomGallary;
+export default CustomGallery;
