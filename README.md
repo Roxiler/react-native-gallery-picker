@@ -1,6 +1,6 @@
-# react-native-gallery-picker
+# react-native-gallery-picker(Android Only)
 
-Gallery View for React Native
+Gallery View for React Native to pick images from device storage.
 
 ## Installation
 
