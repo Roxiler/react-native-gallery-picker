@@ -13,25 +13,20 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import AlbumList from './album-list';
 import GalleryHeader from './gallery-header';
 import { useGalleryView } from './hooks';
-// import { CheckIcon, CloseIcon } from './images'
 import { styles } from './styles';
 
 interface CustomGalleryProps {
-  visible: boolean;
   type: string;
   selectionLimit: number;
-  onClose?: () => void;
   onSelectImages: (media: any[]) => void;
   children?: any;
 }
 
 const CustomGallery = (props: CustomGalleryProps) => {
   const {
-    onClose,
     images,
     numOfColums,
     isRefresh,
-    window,
     albums,
     isAlbumListVisible,
     selectedAlbum,
@@ -59,7 +54,6 @@ const CustomGallery = (props: CustomGalleryProps) => {
         animationType="fade"
         transparent
         visible={openGalleryModal}
-        onRequestClose={onClose}
         style={styles.modalStyle}
       >
         <SafeAreaView style={styles.root}>
@@ -75,10 +69,11 @@ const CustomGallery = (props: CustomGalleryProps) => {
             <AlbumList data={albums} onAlbumNamePress={selectAlbum} />
           ) : (
             <FlatList
-              style={{ flex: 1 }}
+              style={styles.container}
               data={images}
               numColumns={numOfColums}
               extraData={isRefresh}
+              keyExtractor={(item, index) => `${item}_${index}`}
               renderItem={({ item, index }) => {
                 const { node: { image = {} } = {}, selected = false }: any =
                   item;
@@ -88,14 +83,9 @@ const CustomGallery = (props: CustomGalleryProps) => {
                 }
                 return (
                   <TouchableOpacity
+                    key={`image_${index}`}
                     activeOpacity={0.8}
-                    style={[
-                      {
-                        width: window.width / numOfColums,
-                        height: window.width / numOfColums,
-                        borderWidth: 2,
-                      },
-                    ]}
+                    style={styles.imageBoxContainer}
                     onPress={() => onSelectImage(index)}
                   >
                     {!!selected && (

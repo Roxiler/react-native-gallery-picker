@@ -5,20 +5,13 @@ import { launchCamera } from 'react-native-image-picker';
 
 import { checkAppPermission } from '../utils/common';
 export const useGalleryView = (props: any) => {
-  const {
-    type,
-    visible,
-    selectionLimit = 1,
-    onSelectImages,
-    onCameraPress,
-    onClose,
-  } = props;
+  const { type, selectionLimit = 1, onSelectImages, onCameraPress } = props;
   const TYPE_MAPPING: any = {
-    video: 'Videos',
-    photo: 'Photos',
-    mixed: 'All',
+    Video: 'Videos',
+    Photo: 'Photos',
+    All: 'All',
   };
-  const assetType = TYPE_MAPPING[type];
+  const assetType = TYPE_MAPPING[type || 'All'];
   const [images, setImages]: any = useState([]);
   const [isRefresh, setRefresh] = useState(false);
   const [lastCursor, setLastCursor] = useState('');
@@ -86,7 +79,7 @@ export const useGalleryView = (props: any) => {
       })
       .catch((error) => {
         console.log(error);
-        onClose();
+        handleClosePress();
       });
   };
 
@@ -221,21 +214,17 @@ export const useGalleryView = (props: any) => {
   };
 
   const handleClosePress = () => {
-    // if (onClose) {
-    //   onClose();
-    // } else {
     setSelectedImages([]);
     setOpenGalleryModal(false);
     setIsDisabled(false);
     setImages([]);
-    // }
+    setLastCursor('');
+    setIsNextPage(false);
   };
   const onImageError = () => {
     setImageError(true);
   };
   return {
-    visible,
-    onClose,
     images,
     onCameraPress,
     numOfColums,

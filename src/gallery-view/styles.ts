@@ -1,7 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { scale } from '../utils/common';
+const window = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
+  container: { flex: 1 },
   root: {
     height: '100%',
     backgroundColor: 'black',
@@ -49,5 +51,10 @@ export const styles = StyleSheet.create({
   imageContainer: {
     width: '100%',
     height: `100%`,
+  },
+  imageBoxContainer: {
+    width: window.width / 3,
+    height: window.width / 3,
+    borderWidth: 2,
   },
 });
