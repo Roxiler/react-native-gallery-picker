@@ -45,11 +45,10 @@ import CustomGallery from 'react-native-gallery-picker';
 
 return (
     <CustomGallery
-    visible={true}
     type="Mix"
     selectionlimit={10}
     onSelectImages={(images)=>console.log(images)}>
-    { ... }
+    { childern }
     </CustomGallery>
 )
 ```
@@ -59,16 +58,4 @@ List of props that you can pass down to the ProgressBar Component:
 | ----------- | ----------- | ------------ |----|
 |type|Specifies filter on Asset type |'All'|enum("Photo","Video","All")|
 |selectionlimit|Limit on media selection|1|integer|
-|onSelectImages|onSelectImages is event handler function which gets executed when clicked on done after selecting media,first parameter for onClick function is media of the selected media. |(media) => void;|Function
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
-
-## License
-
-MIT
-
----
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+|onSelectImages|onSelectImages is event handler function which gets executed when clicked on done after selecting files,first parameter will return array of files. |(files) => void;|Function
