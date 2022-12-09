@@ -1,11 +1,11 @@
-# react-native-gallery-picker(Android Only)
+# react-native-multimedia-picker(Android Only)
 
 Gallery View for React Native to pick images from device storage.
 
 ## Installation
 
 ```sh
-npm install react-native-gallery-picker
+npm install react-native-multimedia-picker
 ```
 ## Checkout below gif.
 
@@ -39,17 +39,17 @@ npm install @react-native-camera-roll/camera-roll --save`
 ## Usage
 
 ```js
-import CustomGallery from 'react-native-gallery-picker';
+import MultiMediaPicker from 'react-native-multimedia-picker';
 
 // ...
 
 return (
-    <CustomGallery
-    type="Mix"
+    <MultiMediaPicker
+    type="All"
     selectionlimit={10}
-    onSelectImages={(images)=>console.log(images)}>
+    onSelectImages={(files)=>console.log(files)}>
     { childern }
-    </CustomGallery>
+    </MultiMediaPicker>
 )
 ```
 
