@@ -1,3 +1,3 @@
-import CustomGallery from '../src/gallery-view/index';
+import MultiMediaPicker from '../src/gallery-view/index';
 
-export default CustomGallery;
+export default MultiMediaPicker;

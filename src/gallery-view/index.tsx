@@ -22,7 +22,7 @@ interface CustomGalleryProps {
   children?: any;
 }
 
-const CustomGallery = (props: CustomGalleryProps) => {
+const MultiMediaPicker = (props: CustomGalleryProps) => {
   const {
     images,
     numOfColums,
@@ -124,4 +124,4 @@ const CustomGallery = (props: CustomGalleryProps) => {
   );
 };
 
-export default CustomGallery;
+export default MultiMediaPicker;
