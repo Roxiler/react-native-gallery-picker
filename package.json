@@ -38,7 +38,19 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "react-native-image-picker",
+    "react",
+    "native",
+    "imagepicker",
+    "image",
+    "picker",
+    "gallery",
+    "multimedia",
+    "files",
+    "instagram-gallery",
+    "facebook-gallery",
+    "video"
   ],
   "repository": "https://github.com/Roxiler/react-native-gallery-picker",
   "author": "Roxiler <official@roxiler.com> (https://github.com/Roxiler)",
